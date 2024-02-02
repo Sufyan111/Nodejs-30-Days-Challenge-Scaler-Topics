@@ -1,19 +1,22 @@
-const fs = require("fs").promises;
+const fs = require("fs");
 
-async function readFileContent(filePath) {
-  try {
-    const content = await fs.readFile(filePath, "utf8");
-    if(content === ""){
-        console.log(`""`)
-        return;
+function readFileContent(filePath) {
+  fs.readFile(filePath, "utf8", (err, content) => {
+    if (err) {
+      console.log(`Error reading file: ${err.message}`);
+      return;
     }
+
+    if (content === "") {
+      console.log(`""`);
+      return;
+    }
+
     console.log(`File Content:\n${content}`);
-  } catch (error) {
-    console.error(`Error reading file: ${error.message}`);
-  }
+  });
 }
 
 // Test Cases
 // readFileContent("test-files/file1.txt");
-readFileContent("test-files/empty-file.txt");
-// readFileContent("test-files/nonexistent-file.txt");
+// readFileContent("test-files/empty-file.txt");
+readFileContent("test-files/nonexistent-file.txt");
