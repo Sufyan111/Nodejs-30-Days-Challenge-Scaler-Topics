@@ -1,11 +1,9 @@
 const fs = require("fs");
 
 function readFileContent(filePath) {
-  fs.readFile(filePath, "utf8", (err, content) => {
-    if (err) {
-      console.log(`Error reading file: ${err.message}`);
-      return;
-    }
+  try {
+    const content = fs.readFileSync(filePath, "utf8");
+
 
     if (content === "") {
       console.log(`""`);
@@ -13,10 +11,11 @@ function readFileContent(filePath) {
     }
 
     console.log(`File Content:\n${content}`);
-  });
+  } catch (err) {
+    console.log(`Error reading file: ${err.message}`);
+  }
 }
-
 // Test Cases
-// readFileContent("test-files/file1.txt");
-// readFileContent("test-files/empty-file.txt");
+readFileContent("test-files/file1.txt");
+readFileContent("test-files/empty-file.txt");
 readFileContent("test-files/nonexistent-file.txt");
